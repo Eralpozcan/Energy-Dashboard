@@ -4,9 +4,10 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueI18n from 'vue-i18n';
+import dotenv from 'dotenv';
 
-
-
+dotenv.config()
+Vue.use(dotenv)
 Vue.use(VueI18n)
 
 Vue.config.productionTip = false;

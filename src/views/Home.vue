@@ -1,15 +1,18 @@
 <template>
-  <Login/>
-
+  <v-app id="app">
+    <TheNavBar/>
+    <Login/>
+  </v-app>
 </template>
 
 <script>
-
-import Login from '../components/Login.vue'
+import TheNavBar from '../components/TheNavBar.vue'
+import Login from '../components/User/Login.vue'
 export default {
   name: "Home",
   components: {
     Login,
+    TheNavBar
   },
 };
 </script>

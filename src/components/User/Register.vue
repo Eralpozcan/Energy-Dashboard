@@ -18,7 +18,7 @@
               <v-text-field v-model="user.password" :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'" label="Password" @click:append="showPass=!showPass" :type="showPass ? 'text' : 'password'"></v-text-field>
             </v-row>
             <v-row>
-              <v-radio-group id="roleradio" label="Role" row>
+              <v-radio-group id="roleradio" label="Role" row v-model="user.role">
                 <v-radio label="Admin" value="admin"></v-radio>
                 <v-radio label="Editor" value="editor"></v-radio>
                 <v-radio label="User" value="user"></v-radio>
@@ -36,7 +36,7 @@
                 Cancel
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn rounded >
+              <v-btn rounded @click="RegisterButton">
                 Register
               </v-btn>
             </v-row>
@@ -48,9 +48,7 @@
 </template>
 
 <script>
-import {vuelidate} from '@/mixins/global'
   export default {
-    mixins:[vuelidate],
     data(){ 
       return {
       user: {
@@ -66,12 +64,18 @@ import {vuelidate} from '@/mixins/global'
       };
     },
     methods: {
-      stateCheck(val){
-        if (val.$dirty && val.$error == false){
-          return true
-        }else if (val.$dirty && val.$error){
-          return false
-        }
+      LoginButton(){
+        this.$router.push({
+          name:"Login",
+        })
+      },
+      RegisterButton(){
+        let userData = {
+          user:this.user,
+          remember:this.remember,
+
+        };
+        this.$store.dispatch('Register',userData)
       }
     },
 };

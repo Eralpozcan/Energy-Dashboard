@@ -11,23 +11,15 @@ const routes = [
     component: Home,
   },
   {
-    path: "/Login",
-    name: "Login",
+    path: "/dashboard",
+    name: "Dashboard",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import("../components/Login.vue"),
+      import("../components/DashBoard/DashBoard.vue"),
   },
-  {
-    path: "/register",
-    name: "Register",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import("../components/Register.vue"),
-  },
+
 ];
 
 const router = new VueRouter({
