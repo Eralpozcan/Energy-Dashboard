@@ -57,8 +57,6 @@ export default {
                 'user',
                 JSON.stringify({
                   name: responseToken.user.name,
-                  email: responseToken.user.email,
-
                   ...userData.user,
                 })
               );
@@ -92,7 +90,6 @@ export default {
                 'user',
                 JSON.stringify({
                   name: responseToken.user.name,
-                  email: responseToken.user.email,
                   ...userData.user,
                   role: responseToken.user.role,
                 })
