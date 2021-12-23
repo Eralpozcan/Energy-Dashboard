@@ -11,7 +11,7 @@
     persistent
   >
     <v-card>
-      <v-card-title > {{ $t('Login') }} </v-card-title>
+      <v-card-title> {{ $t("Login") }} </v-card-title>
       <v-card-text>
         <v-form @keyup.native.enter.prevent="login">
           <v-container>
@@ -47,7 +47,7 @@
         <v-container fluid>
           <v-row v-if="$store.state.user.authError">
             <v-alert type="error" dense outlined width="100%">
-              {{ $t('Login failed') }}
+              {{ $t("Login failed") }}
             </v-alert>
           </v-row>
           <v-row v-else justify="end" class="d-flex align-center">
@@ -58,13 +58,13 @@
                   ($parent.$parent.loginDialog = false)
               "
             >
-              {{ $t('Register') }}
+              {{ $t("Register") }}
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn text @click="$parent.$parent.loginDialog = false">
-              {{ $t('Cancel') }}
+              {{ $t("Cancel") }}
             </v-btn>
-            <v-btn text  @click="login">
+            <v-btn text @click="login">
               <v-progress-circular
                 v-if="
                   $store.state.user.authenticated == false &&
@@ -74,7 +74,7 @@
                 :size="20"
                 style="background: transparent"
               ></v-progress-circular>
-              <span v-else>{{ $t('Login') }}</span>
+              <span v-else>{{ $t("Login") }}</span>
             </v-btn>
           </v-row>
         </v-container>
@@ -97,26 +97,26 @@ export default {
       },
       rules: {
         emailRules: [
-          (v) => !!v || this.$t('Email is required'),
-          (v) => /.+@.+/.test(v) || this.$t('Email must be valid'),
+          (v) => !!v || this.$t("Email is required"),
+          (v) => /.+@.+/.test(v) || this.$t("Email must be valid"),
         ],
       },
     };
   },
   mounted() {
-    if (window.localStorage.getItem('user')) {
-      this.user = JSON.parse(window.localStorage.getItem('user'));
+    if (window.localStorage.getItem("user")) {
+      this.user = JSON.parse(window.localStorage.getItem("user"));
     }
   },
   watch: {
-    '$store.state.user.auth': {
+    "$store.state.user.auth": {
       handler(val) {
         if (val) {
           this.$parent.$parent.loginDialog = false;
         }
       },
     },
-    '$store.state.user.authError': {
+    "$store.state.user.authError": {
       handler(val) {
         if (val) {
           setTimeout(() => {
@@ -136,7 +136,7 @@ export default {
         remember: this.remember,
         user: payload,
       };
-      this.$store.dispatch('user/login', userData);
+      this.$store.dispatch("user/login", userData);
     },
   },
 };

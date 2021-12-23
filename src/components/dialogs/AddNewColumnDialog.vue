@@ -11,7 +11,7 @@
     persistent
   >
     <v-card>
-      <v-card-title>{{ $t('Add Column') }}</v-card-title>
+      <v-card-title>{{ $t("Add Column") }}</v-card-title>
       <v-card-text>
         <v-form v-model="valid">
           <v-text-field
@@ -51,7 +51,7 @@
               text
               @click="$parent.$parent.dialogs.addNewColumnDialogState = false"
             >
-              {{ $t('Cancel') }}
+              {{ $t("Cancel") }}
             </v-btn>
             <v-btn
               color="blue darken-2"
@@ -60,7 +60,7 @@
               :disabled="!valid"
               @click="addColumn(newColumn)"
             >
-              {{ $t('Add') }}
+              {{ $t("Add") }}
             </v-btn>
           </v-row>
         </v-container>
@@ -71,7 +71,7 @@
 
 <script>
 export default {
-  props: ['tableName'],
+  props: ["tableName"],
   data() {
     return {
       newColumn: {
@@ -80,38 +80,38 @@ export default {
         type: null,
       },
       dataTypes: [
-        'Boolean',
-        'Char',
-        'Character Varying',
-        'CIDR',
-        'Date',
-        'Date Range',
-        'Int',
-        'MACaddr',
-        'Numeric',
-        'SmallInt',
-        'Text',
+        "Boolean",
+        "Char",
+        "Character Varying",
+        "CIDR",
+        "Date",
+        "Date Range",
+        "Int",
+        "MACaddr",
+        "Numeric",
+        "SmallInt",
+        "Text",
       ],
       dataLength: null,
       valid: true,
-      required: (value) => !!value || 'Required',
+      required: (value) => !!value || "Required",
     };
   },
   methods: {
     addColumn(column) {
       let item = {};
-      if (column.type == 'Char' || column.type == 'Character Varying') {
+      if (column.type == "Char" || column.type == "Character Varying") {
         item = {
-          name: column.name.replaceAll(' ', '_'),
+          name: column.name.replaceAll(" ", "_"),
           type: String(column.type).toLowerCase() + `(${this.dataLength})`,
         };
       } else {
         item = {
-          name: column.name.replaceAll(' ', '_'),
+          name: column.name.replaceAll(" ", "_"),
           type: String(column.type).toLowerCase(),
         };
       }
-      this.$store.dispatch('datatable/addNewColumn', {
+      this.$store.dispatch("datatable/addNewColumn", {
         tableName: String(this.tableName).toLowerCase(),
         column: item,
       });

@@ -15,15 +15,15 @@
 </template>
 
 <script>
-import user from '@/store/modules/user.js';
-import DataTable from '../components/tables/Dashboard.vue';
+import user from "@/store/modules/user.js";
+import DataTable from "../components/tables/Dashboard.vue";
 export default {
   components: {
     DataTable,
   },
   beforeCreate() {
     if (!user.state.authenticated) {
-      this.$router.push({ name: 'Home' });
+      this.$router.push({ name: "Home" });
     }
   },
   computed: {
@@ -35,8 +35,8 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('datatable/getAll', { tableName: 'departments' });
-    this.$store.dispatch('datatable/getAll', { tableName: 'factories' });
+    this.$store.dispatch("datatable/getAll", { tableName: "departments" });
+    this.$store.dispatch("datatable/getAll", { tableName: "factories" });
   },
 };
 </script>

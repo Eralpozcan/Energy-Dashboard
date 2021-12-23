@@ -1,14 +1,14 @@
-import axios from 'axios';
-import user from './user';
+import axios from "axios";
+import user from "./user";
 
 const setDateFormat = (columns, rowData) => {
   let dates = columns
-    .filter((col) => col.format_type == 'date')
+    .filter((col) => col.format_type == "date")
     .map((item) => item.attname);
   rowData.forEach((data) => {
     Object.keys(data).forEach((item) => {
       if (dates.includes(item) && data[item] != null) {
-        data[item] = data[item].split('T')[0];
+        data[item] = data[item].split("T")[0];
       }
     });
   });
@@ -16,12 +16,12 @@ const setDateFormat = (columns, rowData) => {
 
 const setDateRangeFormat = (columns, rowData) => {
   let dateranges = columns
-    .filter((col) => col.format_type == 'daterange')
+    .filter((col) => col.format_type == "daterange")
     .map((item) => item.attname);
   rowData.forEach((data) => {
     Object.keys(data).forEach((item) => {
       if (dateranges.includes(item) && data[item] != null) {
-        let range = data[item].split(',');
+        let range = data[item].split(",");
         data[item] = [range[0].slice(1), range[1].slice(0, -1)];
       }
     });
@@ -86,9 +86,9 @@ export default {
   },
   actions: {
     async getAll({ commit }, data) {
-      console.log('getAll');
+      console.log("getAll");
       await axios
-        .get(process.env.VUE_APP_API + '/dashboard/getall', {
+        .get(process.env.VUE_APP_API + "/dashboard/getall", {
           params: {
             tablename: data.tableName,
           },
@@ -99,7 +99,7 @@ export default {
           setDateFormat(res.data.columns, res.data.rows);
           //set daterange to array
           setDateRangeFormat(res.data.columns, res.data.rows);
-          commit('setDepartments', [data.tableName, res.data]);
+          commit("setDepartments", [data.tableName, res.data]);
         })
         .catch((err) => {
           console.error(err);
@@ -107,14 +107,14 @@ export default {
     },
     async addNewRow({ commit, state }, data) {
       await axios
-        .post(process.env.VUE_APP_API + '/dashboard/addnewrow', data)
+        .post(process.env.VUE_APP_API + "/dashboard/addnewrow", data)
         .then((res) => {
           //timestamp date datas to date
           setDateFormat(state[data.tableName].columns, res.data.rows);
           //set daterange to array
           setDateRangeFormat(state[data.tableName].columns, res.data.rows);
-          commit('addNewRow', [data.tableName, res]);
-          console.log(res.status + ' new row added successfully');
+          commit("addNewRow", [data.tableName, res]);
+          console.log(res.status + " new row added successfully");
         })
         .catch((err) => {
           console.error(err);
@@ -123,12 +123,12 @@ export default {
 
     async deleteRow({ commit }, data) {
       await axios
-        .delete(process.env.VUE_APP_API + '/dashboard/deleterow', {
+        .delete(process.env.VUE_APP_API + "/dashboard/deleterow", {
           data: { tableName: data.tableName, id: data.id },
         })
         .then((res) => {
-          commit('deleteRow', [data.tableName, res.data]);
-          console.log(res.status + ' row deleted successfully');
+          commit("deleteRow", [data.tableName, res.data]);
+          console.log(res.status + " row deleted successfully");
         })
         .catch((err) => {
           console.error(err);
@@ -137,14 +137,14 @@ export default {
 
     async editRow({ commit, state }, data) {
       await axios
-        .patch(process.env.VUE_APP_API + '/dashboard/updaterow', data)
+        .patch(process.env.VUE_APP_API + "/dashboard/updaterow", data)
         .then((res) => {
           //timestamp date datas to date
           setDateFormat(state[data.tableName].columns, res.data.rows);
           //set daterange to array
           setDateRangeFormat(state[data.tableName].columns, res.data.rows);
-          commit('editRow', [data.tableName, res.data.rows[0]]);
-          console.log(res.status + ' row updated successfully');
+          commit("editRow", [data.tableName, res.data.rows[0]]);
+          console.log(res.status + " row updated successfully");
         })
         .catch((err) => {
           console.error(err);
@@ -153,13 +153,10 @@ export default {
 
     async addNewColumn({ commit }, data) {
       await axios
-        .post(
-          process.env.VUE_APP_API + '/dashboard/addnewcolumn',
-          data
-        )
+        .post(process.env.VUE_APP_API + "/dashboard/addnewcolumn", data)
         .then((res) => {
-          commit('addNewColumn', [data.tableName, data.column]);
-          console.log(res.status + ' new column added successfully');
+          commit("addNewColumn", [data.tableName, data.column]);
+          console.log(res.status + " new column added successfully");
         })
         .catch((err) => {
           console.error(err);
@@ -168,12 +165,12 @@ export default {
 
     async deleteColumn({ commit }, data) {
       await axios
-        .delete(process.env.VUE_APP_API + '/dashboard/deletecolumn', {
+        .delete(process.env.VUE_APP_API + "/dashboard/deletecolumn", {
           data: { tableName: data.tableName, column: data.column },
         })
         .then((res) => {
-          commit('deleteColumn', [data.tableName, data.column]);
-          console.log(res.status + ' column deleted successfully');
+          commit("deleteColumn", [data.tableName, data.column]);
+          console.log(res.status + " column deleted successfully");
         })
         .catch((err) => {
           console.error(err);

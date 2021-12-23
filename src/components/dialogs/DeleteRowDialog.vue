@@ -10,10 +10,10 @@
     "
   >
     <v-card>
-      <v-card-title>{{ $t('Delete Row') }}</v-card-title>
+      <v-card-title>{{ $t("Delete Row") }}</v-card-title>
       <v-card-text class="mt-4">
         <strong class="mr-4">id= {{ id }}</strong>
-        {{ $t('Are you sure to delete this row?') }}
+        {{ $t("Are you sure to delete this row?") }}
       </v-card-text>
       <v-card-actions>
         <v-container>
@@ -22,10 +22,10 @@
               class="mx-2"
               text
               @click="$parent.$parent.dialogs.deleteRowDialogState = false"
-              >{{ $t('No') }}</v-btn
+              >{{ $t("No") }}</v-btn
             >
             <v-btn color="primary" class="mx-2" text @click="deleteItem"
-              >{{ $t('Yes') }}
+              >{{ $t("Yes") }}
             </v-btn>
           </v-row>
         </v-container>
@@ -36,10 +36,10 @@
 
 <script>
 export default {
-  props: ['tableName', 'id'],
+  props: ["tableName", "id"],
   methods: {
     deleteItem() {
-      this.$store.dispatch('datatable/deleteRow', {
+      this.$store.dispatch("datatable/deleteRow", {
         tableName: String(this.tableName).toLowerCase(),
         id: this.id,
       });

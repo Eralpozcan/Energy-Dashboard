@@ -15,7 +15,7 @@
     persistent
   >
     <v-card>
-      <v-card-title>{{ $t('Edit Row') }}</v-card-title>
+      <v-card-title>{{ $t("Edit Row") }}</v-card-title>
       <v-container fluid class="py-6 px-6">
         <v-form v-model="valid">
           <v-row
@@ -103,7 +103,7 @@
               class="mx-2"
               text
               @click="$parent.$parent.dialogs.editRowDialogState = false"
-              >{{ $t('Cancel') }}</v-btn
+              >{{ $t("Cancel") }}</v-btn
             >
             <v-btn
               color="primary"
@@ -116,7 +116,7 @@
                 row['name'] == null ||
                 row['name'] == ''
               "
-              >{{ $t('Save') }}</v-btn
+              >{{ $t("Save") }}</v-btn
             >
           </v-row>
         </v-form>
@@ -126,9 +126,9 @@
 </template>
 
 <script>
-import { validation } from '@/mixins/validator.js';
+import { validation } from "@/mixins/validator.js";
 export default {
-  props: ['tableName', 'headers', 'data'],
+  props: ["tableName", "headers", "data"],
   mixins: [validation],
   data() {
     return {
@@ -146,11 +146,11 @@ export default {
       let newRow = await this.correctRange(this.headers, this.row);
       let cols = await this.headers.map((col) => col.value);
       Object.keys(newRow).forEach((item) => {
-        if (!cols.includes(item) && item != 'id') {
+        if (!cols.includes(item) && item != "id") {
           delete newRow[item];
         }
       });
-      await this.$store.dispatch('datatable/editRow', {
+      await this.$store.dispatch("datatable/editRow", {
         tableName: String(this.tableName).toLowerCase(),
         row: newRow,
       });
@@ -159,7 +159,7 @@ export default {
     correctRange(columns, row) {
       let newRow = { ...row };
       let dateranges = columns
-        .filter((col) => col.type == 'daterange')
+        .filter((col) => col.type == "daterange")
         .map((item) => item.value);
 
       Object.keys(newRow).forEach((item) => {

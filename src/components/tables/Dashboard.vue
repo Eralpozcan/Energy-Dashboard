@@ -156,13 +156,13 @@
 </template>
 
 <script>
-import AddNewRowDialog from '../dialogs/AddNewRowDialog.vue';
-import EditRowDialog from '../dialogs/EditRowDialog.vue';
-import DeleteRowDialog from '../dialogs/DeleteRowDialog.vue';
-import AddNewColumnDialog from '../dialogs/AddNewColumnDialog.vue';
-import DeleteColumnDialog from '../dialogs/DeleteColumnDialog.vue';
+import AddNewRowDialog from "../dialogs/AddNewRowDialog.vue";
+import EditRowDialog from "../dialogs/EditRowDialog.vue";
+import DeleteRowDialog from "../dialogs/DeleteRowDialog.vue";
+import AddNewColumnDialog from "../dialogs/AddNewColumnDialog.vue";
+import DeleteColumnDialog from "../dialogs/DeleteColumnDialog.vue";
 export default {
-  props: ['tableName', 'data'],
+  props: ["tableName", "data"],
   components: {
     AddNewRowDialog,
     EditRowDialog,
@@ -200,27 +200,27 @@ export default {
   mounted() {
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('dragenter', this.moveHeader);
+      .addEventListener("dragenter", this.moveHeader);
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('dragover', (e) => {
+      .addEventListener("dragover", (e) => {
         e.preventDefault();
       });
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('drop', (e) => {
+      .addEventListener("drop", (e) => {
         e.preventDefault();
-        e.target.style['border'] = '';
+        e.target.style["border"] = "";
       });
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('dragleave', this.dragLeave);
+      .addEventListener("dragleave", this.dragLeave);
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('dragstart', this.dragStart);
+      .addEventListener("dragstart", this.dragStart);
     document
       .getElementById(`${this.tableName}-card`)
-      .addEventListener('dragend', this.dragEnd);
+      .addEventListener("dragend", this.dragEnd);
   },
   watch: {
     stateData: {
@@ -231,9 +231,9 @@ export default {
         }
       },
     },
-    '$store.state.datatable.selectedFactory': {
+    "$store.state.datatable.selectedFactory": {
       handler(val) {
-        if (this.tableName == 'Departments') {
+        if (this.tableName == "Departments") {
           this.tableData.rows = this.data.rows.filter((e) => e.factory == val);
         }
       },
@@ -254,15 +254,15 @@ export default {
       this.tableData.rows = data.rows;
       data.columns.forEach((col) => {
         let obj = new Object({
-          text: col.attname.replaceAll('_', ' '),
+          text: col.attname.replaceAll("_", " "),
           value: col.attname,
           type: col.format_type,
         });
         this.tableData.columns.push(obj);
       });
       this.tableData.columns.push({
-        text: 'Actions',
-        value: 'actions',
+        text: "Actions",
+        value: "actions",
         sortable: false,
       });
       this.tablekey++;
@@ -279,8 +279,8 @@ export default {
     dragStart(e) {
       this.dragList = [];
       let element = e.target;
-      if (element.tagName == 'TH' && element.textContent != 'Actions') {
-        this.dragSelected = element.textContent.replaceAll(' ', '_');
+      if (element.tagName == "TH" && element.textContent != "Actions") {
+        this.dragSelected = element.textContent.replaceAll(" ", "_");
         this.drag = true;
       }
     },
@@ -288,8 +288,8 @@ export default {
       e.preventDefault();
       let element = e.target;
 
-      if (element.tagName == 'TH' && element.textContent != 'Actions') {
-        this.dragList.push(element.textContent.replaceAll(' ', '_'));
+      if (element.tagName == "TH" && element.textContent != "Actions") {
+        this.dragList.push(element.textContent.replaceAll(" ", "_"));
 
         if (
           Object.values(this.data.columns.map((e) => e.attname)).indexOf(
@@ -309,9 +309,9 @@ export default {
               this.data.columns.map((e) => e.attname)
             ).indexOf(this.dragList[this.dragList.length - 1]);
             if (this.targetIndex < this.itemIndex) {
-              e.target.style['border-left'] = '2px solid #78909c';
+              e.target.style["border-left"] = "2px solid #78909c";
             } else if (this.targetIndex > this.itemIndex) {
-              e.target.style['border-right'] = '2px solid #78909c';
+              e.target.style["border-right"] = "2px solid #78909c";
             }
 
             this.drag = true;
@@ -340,10 +340,10 @@ export default {
       }
     },
     dragLeave(e) {
-      e.target.style['border'] = '';
+      e.target.style["border"] = "";
     },
     clickRow(item) {
-      if (this.tableName == 'Factories') {
+      if (this.tableName == "Factories") {
         this.$store.state.datatable.selectedFactory = item.name;
       }
     },

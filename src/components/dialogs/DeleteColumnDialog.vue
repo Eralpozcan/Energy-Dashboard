@@ -11,7 +11,7 @@
     persistent
   >
     <v-card>
-      <v-card-title>{{ $t('Delete Column') }}</v-card-title>
+      <v-card-title>{{ $t("Delete Column") }}</v-card-title>
       <v-container>
         <v-form v-model="valid">
           <v-select
@@ -32,7 +32,7 @@
               text
               @click="$parent.$parent.dialogs.deleteColumnDialogState = false"
             >
-              {{ $t('Cancel') }}
+              {{ $t("Cancel") }}
             </v-btn>
             <v-btn
               color="red darken-2"
@@ -41,7 +41,7 @@
               :disabled="!valid"
               @click="deleteColumn(deletedColumn)"
             >
-              {{ $t('Delete') }}
+              {{ $t("Delete") }}
             </v-btn>
           </v-row>
         </v-container>
@@ -52,20 +52,20 @@
 
 <script>
 export default {
-  props: ['tableName', 'headers'],
+  props: ["tableName", "headers"],
   data() {
     return {
       deletedColumn: null,
       valid: true,
-      required: (value) => !!value || 'Required',
+      required: (value) => !!value || "Required",
       checkCol: (value) =>
-        !['id', 'name', 'factory'].includes(value) ||
-        this.$t('You can not delete this column'),
+        !["id", "name", "factory"].includes(value) ||
+        this.$t("You can not delete this column"),
     };
   },
   methods: {
     deleteColumn(column) {
-      this.$store.dispatch('datatable/deleteColumn', {
+      this.$store.dispatch("datatable/deleteColumn", {
         tableName: String(this.tableName).toLowerCase(),
         column,
       });

@@ -26,7 +26,7 @@
           <v-col sm="6" class="p-0 d-flex justify-center">
             <router-link v-slot="{ href, navigate }" to="/dashboard" custom>
               <v-btn color="red" :href="href" @click="navigate" text>
-                {{ $t('Dashboard') }}
+                {{ $t("Dashboard") }}
               </v-btn>
             </router-link>
           </v-col>
@@ -46,20 +46,20 @@
           <v-list-item>
             <v-btn elevation="0" color="white" @click="loginDialog = true">
               <v-icon class="mr-2">mdi-login-variant</v-icon>
-              {{ $t('Log In') }}
+              {{ $t("Log In") }}
             </v-btn>
           </v-list-item>
           <v-list-item>
             <v-btn elevation="0" color="white" @click="registerDialog = true">
               <v-icon class="mr-2">mdi-account-plus</v-icon>
-              {{ $t('Register') }}
+              {{ $t("Register") }}
             </v-btn>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item>
             <v-btn elevation="0" color="white" @click="logout">
               <v-icon class="mr-2">mdi-logout-variant</v-icon>
-              {{ $t('Log Out') }}
+              {{ $t("Log Out") }}
             </v-btn>
           </v-list-item>
         </v-list>
@@ -101,7 +101,7 @@
             <v-list-item>
               <router-link v-slot="{ href, navigate }" to="/dashboard" custom>
                 <span :href="href" @click="navigate" class="router-link-mobile">
-                  <h3>{{ $t('Dashboard') }}</h3>
+                  <h3>{{ $t("Dashboard") }}</h3>
                 </span>
               </router-link>
             </v-list-item>
@@ -114,25 +114,25 @@
 </template>
 
 <script>
-import i18n from './i18n/i18n.js'
-import Register from './components/User/Register.vue';
-import Login from './components/User/Login.vue';
+import i18n from "./i18n/i18n.js";
+import Register from "./components/User/Register.vue";
+import Login from "./components/User/Login.vue";
 export default {
   components: {
     Register,
     Login,
   },
-  name: 'App',
+  name: "App",
   data() {
     return {
-      lang: 'en',
+      lang: "en",
       drawer: false,
       registerDialog: false,
       loginDialog: false,
     };
   },
   beforeCreate() {
-    this.$store.dispatch('user/userExist');
+    this.$store.dispatch("user/userExist");
   },
   created() {
     if (this.$store.state.user.user == null) {
@@ -141,8 +141,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('user/logout');
-      if (this.$route.path != '/') this.$router.push({ path: '/' });
+      this.$store.dispatch("user/logout");
+      if (this.$route.path != "/") this.$router.push({ path: "/" });
       this.loginDialog = true;
     },
     chLang(lang) {
@@ -152,7 +152,4 @@ export default {
   },
 };
 </script>
-<style>
-
-
-</style>
+<style></style>

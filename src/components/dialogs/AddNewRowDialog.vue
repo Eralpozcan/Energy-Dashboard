@@ -15,7 +15,7 @@
     persistent
   >
     <v-card>
-      <v-card-title> {{ $t('Add Row') }} </v-card-title>
+      <v-card-title> {{ $t("Add Row") }} </v-card-title>
       <v-container fluid class="py-6 px-6">
         <v-form v-model="valid">
           <v-row
@@ -71,7 +71,7 @@
                     color="primary"
                     @click="(dateRangeMenu = false), (newRow[item.value] = [])"
                   >
-                    {{ $t('Cancel') }}
+                    {{ $t("Cancel") }}
                   </v-btn>
                   <v-btn
                     text
@@ -81,7 +81,7 @@
                         correctRange(dateRange, item.value)
                     "
                   >
-                    {{ $t('Ok') }}
+                    {{ $t("Ok") }}
                   </v-btn>
                 </v-date-picker>
               </v-menu>
@@ -137,9 +137,9 @@
 </template>
 
 <script>
-import { validation } from '@/mixins/validator.js';
+import { validation } from "@/mixins/validator.js";
 export default {
-  props: ['tableName', 'headers'],
+  props: ["tableName", "headers"],
   mixins: [validation],
   data() {
     return {
@@ -153,15 +153,15 @@ export default {
   computed: {
     dateRangePickerValue() {
       if (this.dateRange) {
-        return this.dateRange.join(' ~ ');
+        return this.dateRange.join(" ~ ");
       } else {
-        return '';
+        return "";
       }
     },
   },
   methods: {
     addNewRow() {
-      this.$store.dispatch('datatable/addNewRow', {
+      this.$store.dispatch("datatable/addNewRow", {
         tableName: String(this.tableName).toLowerCase(),
         row: { ...this.newRow },
       });
