@@ -1,5 +1,5 @@
-import en from './assets/i18n/en.json';
-import tr from './assets/i18n/tr.json';
+import en from '../assets/i18n/en.json';
+import tr from '../assets/i18n/tr.json';
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
 

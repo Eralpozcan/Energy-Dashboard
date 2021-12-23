@@ -1,110 +1,118 @@
-import axios from "axios";
-import jwt from "jsonwebtoken";
+import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import router from '../../router/router';
 
 export default {
+  namespaced: true,
   state: {
-    user: null,
-    auth: null,
+    authenticated: null,
     authError: false,
-    loginExpire: false,
-    hasedPassword: null,
+    user: null,
   },
+
   mutations: {
-    userLogin(state, payload) {
+    setUser(state, payload) {
       state.user = payload;
       setTimeout(() => {
-        state.auth = true;
-        //router
+        state.authenticated = true;
+        router.push({ name: 'Dashboard' });
       }, 1000);
     },
     userLogout(state) {
       state.user = null;
     },
-
   },
+
   actions: {
-    TokenExpireCheck({ context }) {
-      if (window.localStorage.getItem("token")) {
+    async userExist({ commit }) {
+      if (window.localStorage.getItem('token')) {
         try {
           let token = jwt.verify(
-            window.localStorage.getItem("token"),
-            process.env.VUE_SECRET_KEY
+            window.localStorage.getItem('token'),
+            process.env.VUE_SECRET_TOKEN
           );
           if (token.exp < Date.now()) {
-            context.commit("userLogin", token.user);
+            commit('setUser', token.user);
           }
-        } catch (error) {
-          console.log("Login Expired");
-          //context.state.loginExpire = true
+        } catch {
+          //console.log('login had expired');
         }
       }
     },
-    Register({ context, state }, userData) {
-      axios
-        .post(process.env.VUE_APP_API + "/account/register", {
-          ...userData.user,
-        })
+
+    async register({ commit, state }, userData) {
+      state.authenticated = false;
+      await axios
+        .post(process.env.VUE_APP_API + '/account/register', userData.user)
         .then((response) => {
-          console.log(response);
           let token = response.data.token;
-          window.localStorage.setItem("token", token);
+          window.localStorage.setItem('token', token);
           try {
-            let resToken = jwt.verify(token, process.env.VUE_SECRET_KEY);
+            let responseToken = jwt.verify(
+              token,
+              process.env.VUE_SECRET_TOKEN
+            );
             if (userData.remember) {
               window.localStorage.setItem(
-                "user",
+                'user',
                 JSON.stringify({
-                  email: resToken.user.email,
+                  name: responseToken.user.name,
+                  email: responseToken.user.email,
+
                   ...userData.user,
                 })
               );
             }
-            context.commit("userLogin", resToken.user);
+            commit('setUser', responseToken.user);
           } catch (error) {
-            console.log(error);
+            console.error(error);
           }
         })
         .catch((err) => {
-          console.log("Error Hata", err);
-          state.auth = null;
+          console.error(err);
           state.authError = true;
+          state.authenticated = null;
         });
     },
-    async Login({ commit, state }, userData) {
+
+    async login({ commit, state }, userData) {
+      state.authenticated = false;
       await axios
-        .post(process.env.VUE_APP_API + "/account/login", {
-          ...userData.user,
-        })
+        .post(process.env.VUE_APP_API + '/account/login', userData.user)
         .then((response) => {
           let token = response.data.token;
-          console.log(response.data.role)
-          window.localStorage.setItem("token", token);
+          window.localStorage.setItem('token', token);
           try {
-            let resToken = jwt.verify(token, process.env.VUE_SECRET_KEY);
-            if (userData.remember){
+            let responseToken = jwt.verify(
+              token,
+              process.env.VUE_SECRET_TOKEN
+            );
+            if (userData.remember) {
               window.localStorage.setItem(
-                "user",
+                'user',
                 JSON.stringify({
-                  email: resToken.user.email,
+                  name: responseToken.user.name,
+                  email: responseToken.user.email,
                   ...userData.user,
-                  role: resToken.user.role,
+                  role: responseToken.user.role,
                 })
               );
             }
-            commit("userLogin", resToken.user);
+            commit('setUser', responseToken.user);
           } catch (error) {
-            console.log("Login Try", error);
+            console.error(error);
           }
         })
-        .catch((err) => {
-          console.log("Login Error", err);
-          state.auth = null;
+        .catch((error) => {
+          console.error(error);
           state.authError = true;
+          state.authenticated = null;
         });
     },
-    Logout({ commit }) {
-      window.localStorage.removeItem("token");
-      commit("userLogout");
+
+    logout({ commit }) {
+      window.localStorage.removeItem('token');
+      commit('userLogout');
     },
   },
 };
